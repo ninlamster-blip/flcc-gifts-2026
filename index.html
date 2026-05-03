@@ -218,6 +218,7 @@ tl:{s:"Ang Marunong na Tagapayo",d:"Tulad ni Solomon na nakatanggap ng banal na 
 
 function calcScores(ans){const s={};GK.forEach(k=>s[k]=0);QS.forEach((_,i)=>s[GK[i%19]]+=(ans[i]||0));return s;}
 function getTop3(s){return Object.entries(s).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,v])=>({k,v,name:GN[k],emoji:GE[k]}));}
+function getBottom3(s){return Object.entries(s).sort((a,b)=>a[1]-b[1]).slice(0,3).map(([k,v])=>({k,v,name:GN[k],emoji:GE[k]}));}
 
 const SITE_URL="https://ninlamster-blip.github.io/flcc-gifts";
 const TX={
@@ -232,7 +233,7 @@ sh:["0\nNever","1\nSome-\ntimes","2\nUsually","3\nAlways"],
 po:(p)=>`Page ${p} of 7 · Q${(p-1)*19+1}–${p*19}`,
 pw:"⚠️ Please answer all questions on this page before continuing.",
 nx:"Next Page →",bk:"← Back",
-sl:"Your Primary Spiritual Gift",t3:"Your Top 3 Gifts",sc:"All 19 Gift Scores",
+sl:"Your Primary Spiritual Gift",t3:"Your Top 3 Gifts — Where God Has Wired You Most",b3:"Your Lowest 3 Gifts — Where You Need the Team",b3note:"These are not weaknesses — they are invitations to depend on others in the body of Christ who carry these gifts strongly. (1 Corinthians 12:21)",sc:"All 19 Gift Scores",
 vl:"Your Anchor Verse",tc:"Your Towel Challenge",ml:"Suggested Ministries",
 el:"A Word For You",ns:"Your Next Step",
 nt:"Now that you've discovered your profile, go speak to your ministry leader to find out where you can start serving!",
@@ -250,7 +251,7 @@ sh:["0\nHindi\nKailanman","1\nMinsan","2\nMadalas","3\nPalagi"],
 po:(p)=>`Pahina ${p} ng 7 · T${(p-1)*19+1}–${p*19}`,
 pw:"⚠️ Pakisagot ang lahat ng tanong sa pahinang ito bago magpatuloy.",
 nx:"Susunod na Pahina →",bk:"← Bumalik",
-sl:"Ang Iyong Pangunahing Espirituwal na Kaloob",t3:"Ang Iyong Top 3 na Kaloob",sc:"Lahat ng 19 na Kaloob",
+sl:"Ang Iyong Pangunahing Espirituwal na Kaloob",t3:"Ang Iyong Top 3 na Kaloob — Kung Saan Ka Pinaka-Natatanging Ginawa ng Diyos",b3:"Ang Iyong Pinakamababang 3 Kaloob — Kung Saan Kailangan Mo ang Koponan",b3note:"Hindi ito mga kahinaan — ito ay imbitasyon upang umasa sa iba sa katawan ni Kristo na may mga kaloob na ito nang mas malakas. (1 Corinto 12:21)",sc:"Lahat ng 19 na Kaloob",
 vl:"Ang Iyong Anchor Verse",tc:"Ang Iyong Towel Challenge",ml:"Mga Mungkahing Ministeryo",
 el:"Isang Salita Para sa Iyo",ns:"Ang Iyong Susunod na Hakbang",
 nt:"Ngayon na natuklasan mo na ang iyong profile, makipag-usap sa iyong ministry leader upang malaman kung saan ka magsisimula!",
@@ -288,20 +289,22 @@ function App(){
   const buildResult=()=>{
     const scores=calcScores(ans);
     const t3=getTop3(scores);
+    const b3=getBottom3(scores);
     const pk=t3[0].k;
     const prf=PRF[pk][lang];
-    setRes({scores,t3,prf,pk});
+    setRes({scores,t3,b3,prf,pk});
     setPhase(2);
   };
 
   const reset=()=>{setPhase(0);setPg(0);setAns({});setRes(null);setWarn(false);setCopied(false);scroll();};
 
   const buildShareText=(r)=>{
-    const{prf,t3,pk}=r;
+    const{prf,t3,b3,pk}=r;
     return `🫙 FLCC - Farwaniya 1 | Spiritual Gifts Discovery\n\n`+
       `${GE[pk]} PRIMARY GIFT: ${GN[pk]}\n`+
       `Serving Style: ${prf.s}\n\n`+
-      `TOP 3 GIFTS:\n${t3.map((g,i)=>`${i+1}. ${g.emoji} ${g.name} — ${g.v}/21`).join("\n")}\n\n`+
+      `✅ TOP 3 GIFTS (Strongest):\n${t3.map((g,i)=>`${i+1}. ${g.emoji} ${g.name} — ${g.v}/21`).join("\n")}\n\n`+
+      `🔄 LOWEST 3 GIFTS (Lean on the Team):\n${b3.map((g,i)=>`${i+1}. ${g.emoji} ${g.name} — ${g.v}/21`).join("\n")}\n\n`+
       `${prf.v}\n\n`+
       `🧺 TOWEL CHALLENGE:\n${prf.tc}\n\n`+
       `📌 SUGGESTED MINISTRIES: ${prf.mini.join(" · ")}\n\n`+
@@ -434,7 +437,7 @@ function App(){
 
         {/* ═══ RESULT ═══ */}
         {phase===2&&res&&(()=>{
-          const{scores,t3,prf,pk}=res;
+          const{scores,t3,b3,prf,pk}=res;
           return(
             <div className="fade">
               {/* PRINT HEADER — visible only when printing */}
@@ -453,7 +456,8 @@ function App(){
 
               {/* Top 3 */}
               <div className="print-card" style={{marginBottom:12}}>
-                <div style={{fontSize:10,color:GR,fontWeight:700,textTransform:"uppercase",letterSpacing:".1em",marginBottom:8}}>{t.t3}</div>
+                <div style={{fontSize:10,color:GR,fontWeight:700,textTransform:"uppercase",letterSpacing:".1em",marginBottom:4}}>{t.t3}</div>
+                <div style={{fontSize:11,color:A,fontStyle:"italic",marginBottom:8}}>{lang==="en"?"These are the gifts God has most strongly placed in you.":"Ito ang mga kaloob na pinaka-malakas na inilagay ng Diyos sa iyo."}</div>
                 <div style={{display:"flex",gap:8}}>
                   {t3.map((g,i)=>(
                     <div key={i} style={{flex:1,background:"white",border:`2px solid ${i===0?A:BD}`,borderRadius:10,padding:"10px 6px",textAlign:"center"}}>
@@ -462,6 +466,26 @@ function App(){
                       <div style={{background:i===0?A:GRG,color:i===0?"white":GR,borderRadius:10,padding:"2px 6px",fontSize:11,fontWeight:700,marginTop:4,display:"inline-block"}}>{g.v}/21</div>
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* Bottom 3 */}
+              <div className="print-card" style={{background:"white",border:`1px solid ${BD}`,borderRadius:12,padding:"12px 14px",marginBottom:12}}>
+                <div style={{fontSize:10,color:"#6B7280",fontWeight:700,textTransform:"uppercase",letterSpacing:".1em",marginBottom:4}}>{t.b3}</div>
+                <div style={{fontSize:11,color:GR,fontStyle:"italic",lineHeight:1.55,marginBottom:10}}>{t.b3note}</div>
+                <div style={{display:"flex",gap:8}}>
+                  {b3.map((g,i)=>(
+                    <div key={i} style={{flex:1,background:GRG,border:`1.5px dashed #D1D5DB`,borderRadius:10,padding:"10px 6px",textAlign:"center"}}>
+                      <div style={{fontSize:22,marginBottom:4,opacity:.65}}>{g.emoji}</div>
+                      <div style={{fontSize:9,fontWeight:600,color:GR,lineHeight:1.3}}>{g.name}</div>
+                      <div style={{background:"#E5E7EB",color:GR,borderRadius:10,padding:"2px 6px",fontSize:11,fontWeight:600,marginTop:4,display:"inline-block"}}>{g.v}/21</div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{marginTop:10,padding:"8px 10px",background:"#F3F4F6",borderRadius:8,fontSize:12,color:GR,lineHeight:1.6}}>
+                  💡 {lang==="en"
+                    ?"This means you will thrive most when you serve alongside people who are strong in these areas. A healthy church is built when every gift works together."
+                    :"Nangangahulugan ito na mas magiging matagumpay ka kapag naglilingkod kasama ang mga taong malakas sa mga larangang ito. Ang isang malusog na simbahan ay itinayo kapag ang bawat kaloob ay magkasamang gumagana."}
                 </div>
               </div>
 
