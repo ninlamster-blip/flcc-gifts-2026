@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
-<title>Spiritual Gifts Discovery — FLCC Farwaniya 1</title>
+<title>Spiritual Gifts Discovery — FLCC Kuwait</title>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -359,7 +359,7 @@ function getBottom3(s){return Object.entries(s).sort((a,b)=>a[1]-b[1]).slice(0,3
 
 const SITE_URL="https://ninlamster-blip.github.io/flcc-gifts";
 const TX={
-en:{lb:"Filipino",ch:"FLCC - Farwaniya 1",prv:"🔒 Private reflection tool — your answers are never saved or stored anywhere.",
+en:{lb:"Filipino",ch:"FLCC Kuwait",prv:"🔒 Private reflection tool — your answers are never saved or stored anywhere.",
 it:"Spiritual Gifts &\nServant Leadership Discovery",
 iv:"\"For even the Son of Man came not to be served but to serve, and to give his life as a ransom for many.\" — Mark 10:45",
 id:"Discover how God has uniquely gifted you to serve His church in Kuwait. This tool uses the complete 133-question Spiritual Gifts Assessment scored using the official score sheet grid.",
@@ -374,10 +374,10 @@ sl:"Your Primary Spiritual Gift",t3:"Your Top 3 Gifts — Where God Has Wired Yo
 vl:"Your Anchor Verse",tc:"Your Towel Challenge",ml:"Suggested Ministries",
 el:"A Word For You",ns:"Your Next Step",
 nt:"Now that you've discovered your profile, go speak to your ministry leader to find out where you can start serving!",
-ld:"Ptr. Justin Flores  ·  Ptr. Doddie Arciaga",
+ld:"Your Ministry Head or Church Pastor",
 pr:"🖨  Print",em:"✉️  Email",ms:"💬  Copy for Messenger",rr:"Take Again",
 st:["Spiritual Gifts","My Profile"],copied:"✅ Copied!"},
-tl:{lb:"English",ch:"FLCC - Farwaniya 1",prv:"🔒 Pribadong kagamitan — hindi kailanman sine-save ang iyong mga sagot.",
+tl:{lb:"English",ch:"FLCC Kuwait",prv:"🔒 Pribadong kagamitan — hindi kailanman sine-save ang iyong mga sagot.",
 it:"Pagtuklas ng Espirituwal na Kaloob\nat Servant Leadership",
 iv:"\"Sapagka't ang Anak ng tao ay hindi naparito upang paglingkuran, kundi upang maglingkod, at ibigay ang kaniyang buhay na pangtubos sa marami.\" — Marcos 10:45",
 id:"Tuklasin kung paano ka natatanging pinagkalooban ng Diyos para maglingkod sa Kanyang simbahan dito sa Kuwait. Ginagamit ng tool na ito ang kumpletong 133-tanong na Pagsusuri ng Espirituwal na Kaloob.",
@@ -392,7 +392,7 @@ sl:"Ang Iyong Pangunahing Espirituwal na Kaloob",t3:"Ang Iyong Top 3 na Kaloob �
 vl:"Ang Iyong Anchor Verse",tc:"Ang Iyong Towel Challenge",ml:"Mga Mungkahing Ministeryo",
 el:"Isang Salita Para sa Iyo",ns:"Ang Iyong Susunod na Hakbang",
 nt:"Ngayon na natuklasan mo na ang iyong profile, makipag-usap sa iyong ministry leader upang malaman kung saan ka magsisimula!",
-ld:"Ptr. Justin Flores  ·  Ptr. Doddie Arciaga",
+ld:"Your Ministry Head or Church Pastor",
 pr:"🖨  I-print",em:"✉️  I-email",ms:"💬  Kopyahin para sa Messenger",rr:"Ulit na Gawin",
 st:["Espirituwal na Kaloob","Aking Profile"],copied:"✅ Nakopya!"}
 };
@@ -438,7 +438,7 @@ function App(){
 
   const buildShareText=(r)=>{
     const{prf,t3,b3,pk}=r;
-    return `🫙 FLCC - Farwaniya 1 | Spiritual Gifts Discovery\n\n`+
+    return `🫙 FLCC Kuwait | Spiritual Gifts Discovery\n\n`+
       `${GE[pk]} PRIMARY GIFT: ${GN[pk]}\n`+
       `Serving Style: ${prf.s}\n\n`+
       `✅ TOP 3 GIFTS (Strongest):\n${t3.map((g,i)=>`${i+1}. ${g.emoji} ${g.name} — ${g.v}/21`).join("\n")}\n\n`+
@@ -447,12 +447,12 @@ function App(){
       `🧺 TOWEL CHALLENGE:\n${prf.tc}\n\n`+
       `📌 SUGGESTED MINISTRIES: ${prf.mini.join(" · ")}\n\n`+
       `"${prf.enc}"\n\n`+
-      `🚀 Next Step: Speak to Ptr. Justin Flores or Ptr. Doddie Arciaga\n\n`+
+      `🚀 Next Step: Speak to your Ministry Head or Church Pastor\n\n`+
       `🔗 Take the assessment: ${SITE_URL}`;
   };
 
   const handleEmail=(r)=>{
-    const sub=encodeURIComponent(`My Spiritual Gifts Profile — FLCC Farwaniya 1`);
+    const sub=encodeURIComponent(`My Spiritual Gifts Profile — FLCC Kuwait`);
     const body=encodeURIComponent(buildShareText(r));
     window.open(`mailto:?subject=${sub}&body=${body}`,"_blank");
   };
@@ -580,7 +580,7 @@ function App(){
             <div className="fade">
               {/* PRINT HEADER — visible only when printing */}
               <div className="print-header" style={{display:"none"}}>
-                <div style={{fontSize:10,letterSpacing:".1em",textTransform:"uppercase",opacity:.7,marginBottom:2}}>FLCC - Farwaniya 1</div>
+                <div style={{fontSize:10,letterSpacing:".1em",textTransform:"uppercase",opacity:.7,marginBottom:2}}>FLCC Kuwait</div>
                 <div style={{fontSize:16,fontWeight:700}}>Spiritual Gifts & Servant Leadership Profile</div>
               </div>
 
